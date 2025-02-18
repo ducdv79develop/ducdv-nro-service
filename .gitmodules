@@ -1,0 +1,6 @@
+[submodule "ducdv-nro-java-server"]
+	path = ducdv-nro-java-server
+	url = https://github.com/ducdv79develop/ducdv-nro-java-server.git
+[submodule "ducdv-nro-php-web"]
+	path = ducdv-nro-php-web
+	url = https://github.com/ducdv79develop/ducdv-nro-php-web.git
