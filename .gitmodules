@@ -4,3 +4,9 @@
 [submodule "ducdv-nro-php-web"]
 	path = ducdv-nro-php-web
 	url = https://github.com/ducdv79develop/ducdv-nro-php-web.git
+[submodule "ducdv-nro-admin-api"]
+	path = ducdv-nro-admin-api
+	url = https://github.com/ducdv79develop/ducdv-nro-admin-api.git
+[submodule "ducdv-nro-admin-console"]
+	path = ducdv-nro-admin-console
+	url = https://github.com/ducdv79develop/ducdv-nro-admin-console.git
