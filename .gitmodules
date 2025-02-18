@@ -10,3 +10,6 @@
 [submodule "ducdv-nro-admin-console"]
 	path = ducdv-nro-admin-console
 	url = https://github.com/ducdv79develop/ducdv-nro-admin-console.git
+[submodule "ducdv-nro-unity-client"]
+	path = ducdv-nro-unity-client
+	url = https://github.com/ducdv79develop/ducdv-nro-unity-client.git
