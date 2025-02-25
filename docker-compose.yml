@@ -1,0 +1,61 @@
+services:
+  database:
+    build:
+      context: ./ducdv-docker/mysql
+      dockerfile: Dockerfile
+    container_name: ducdv-nro-mysql-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-nro}
+      MYSQL_USER: ${DB_USER:-user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+#  server:
+#    build:
+#      context: ./ducdv-docker/java-server
+#      dockerfile: Dockerfile
+#    container_name: ducdv-nro-game-server
+#    restart: always
+#    depends_on:
+#      - mysql
+#    environment:
+#      DATASOURCE_URL: jdbc:mysql://mysql:3306/my_game
+#      DATASOURCE_USERNAME: game_user
+#      DATASOURCE_PASSWORD: game_pass
+#    ports:
+#      - "8081:8081"
+#
+#  api-server:
+#    build:
+#      context: ./api-server
+#      dockerfile: Dockerfile
+#    container_name: api_server
+#    restart: always
+#    depends_on:
+#      - mysql
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/my_game
+#      SPRING_DATASOURCE_USERNAME: game_user
+#      SPRING_DATASOURCE_PASSWORD: game_pass
+#    ports:
+#      - "8080:8080"
+#
+#  frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    container_name: vue_frontend
+#    restart: always
+#    ports:
+#      - "5173:5173"
+#    depends_on:
+#      - api-server
+
+volumes:
+  mysql_data:
+    driver: local
