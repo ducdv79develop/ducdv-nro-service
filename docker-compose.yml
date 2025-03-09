@@ -15,47 +15,49 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-#  server:
-#    build:
-#      context: ./ducdv-docker/java-server
-#      dockerfile: Dockerfile
-#    container_name: ducdv-nro-game-server
-#    restart: always
-#    depends_on:
-#      - mysql
-#    environment:
-#      DATASOURCE_URL: jdbc:mysql://mysql:3306/my_game
-#      DATASOURCE_USERNAME: game_user
-#      DATASOURCE_PASSWORD: game_pass
-#    ports:
-#      - "8081:8081"
-#
-#  api-server:
-#    build:
-#      context: ./api-server
-#      dockerfile: Dockerfile
-#    container_name: api_server
-#    restart: always
-#    depends_on:
-#      - mysql
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/my_game
-#      SPRING_DATASOURCE_USERNAME: game_user
-#      SPRING_DATASOURCE_PASSWORD: game_pass
-#    ports:
-#      - "8080:8080"
-#
-#  frontend:
-#    build:
-#      context: ./frontend
-#      dockerfile: Dockerfile
-#    container_name: vue_frontend
-#    restart: always
-#    ports:
-#      - "5173:5173"
-#    depends_on:
-#      - api-server
+  server:
+    build:
+      context: ./ducdv-docker/java-server
+      dockerfile: Dockerfile
+    container_name: ducdv-nro-game-server
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "${APP_CLIENT_PORT}:${APP_CLIENT_PORT}"
+      - "${APP_SERVER_PORT}:${APP_SERVER_PORT}"
+    env_file:
+      - .env
+    networks:
+      - app_network
+
+  admin-api:
+    build:
+      context: ./ducdv-docker/admin-api
+      dockerfile: Dockerfile
+    container_name: ducdv-nro-admin-api
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      - .env
+    ports:
+      - "${API_SERVER_PORT}:${API_SERVER_PORT}"
+
+  admin-console:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vue_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api-server
 
 volumes:
   mysql_data:
     driver: local
+  app_network:
+    driver: bridge
