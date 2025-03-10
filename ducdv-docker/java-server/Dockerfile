@@ -1,14 +1,16 @@
-# Sử dụng OpenJDK 17
-FROM openjdk:17-jdk-slim
+FROM maven:3.9.6-eclipse-temurin-17 AS runtime
 
-# Đặt thư mục làm việc trong container
 WORKDIR /app
 
-# Copy file JAR từ thư mục target vào container
-COPY target/ducdv-nro-service.jar app.jar
+# Copy toàn bộ source code vào container
+COPY ducdv-nro-java-server /app
+
+# Cấp quyền thực thi cho script start
+COPY ducdv-docker/java-server/docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
 
 # Expose cổng để ứng dụng chạy
 EXPOSE ${SERVER_PORT}
 
 # Chạy ứng dụng Spring Boot
-CMD ["sh", "-c", "java -jar app.jar"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]

@@ -1,9 +1,10 @@
-# Source Build Server NRO With Java 17
+# DucDV NRO All Service
+
 
 ## Environment
 + Java 17.0.10
 + Apache Maven 3.9.6
-+ SDK 17 (click here https://download.oracle.com/java/17/archive/jdk-17.0.10_windows-x64_bin.exe)
++ SDK 17
 
 ## Author
 + ducdv79

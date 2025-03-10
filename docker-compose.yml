@@ -1,10 +1,10 @@
 services:
   database:
     build:
-      context: ./ducdv-docker/mysql
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./ducdv-docker/mysql/Dockerfile
     container_name: ducdv-nro-mysql-db
-    restart: always
+    restart: on-failure:5
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-nro}
       MYSQL_USER: ${DB_USER:-user}
@@ -17,47 +17,57 @@ services:
 
   server:
     build:
-      context: ./ducdv-docker/java-server
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./ducdv-docker/java-server/Dockerfile
     container_name: ducdv-nro-game-server
-    restart: always
+    restart: on-failure:5
     depends_on:
-      - mysql
+      - database
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
-      - "${APP_CLIENT_PORT}:${APP_CLIENT_PORT}"
-      - "${APP_SERVER_PORT}:${APP_SERVER_PORT}"
+      - "${SERVER_PORT:-8088}:${SERVER_PORT:-8088}"
+      - "${APP_CLIENT_PORT:-7979}:${APP_CLIENT_PORT:-7979}"
+      - "${APP_SERVER_PORT:-14445}:${APP_SERVER_PORT:-14445}"
     env_file:
       - .env
     networks:
       - app_network
+    volumes:
+      - ./logs/java-server:/app/logs/java-server
 
   admin-api:
     build:
-      context: ./ducdv-docker/admin-api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./ducdv-docker/admin-api/Dockerfile
     container_name: ducdv-nro-admin-api
-    restart: always
+    restart: on-failure:5
     depends_on:
-      - mysql
-    environment:
-      - .env
+      - database
     ports:
-      - "${API_SERVER_PORT}:${API_SERVER_PORT}"
+      - "${API_SERVER_PORT:-8082}:${API_SERVER_PORT:-8082}"
+    env_file:
+      - .env
+    volumes:
+      - ./logs/admin-api:/app/logs/admin-api
 
   admin-console:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: vue_frontend
-    restart: always
+      context: .
+      dockerfile: ./ducdv-docker/admin-console/Dockerfile
+    container_name: ducdv-nro-admin-console
+    restart: on-failure:5
     ports:
-      - "5173:5173"
+      - "8089:80"
+    environment:
+      NGINX_PORT: 80
+      API_HOST: ducdv-nro-admin-api
+      API_PORT: ${API_SERVER_PORT:-8082}
     depends_on:
-      - api-server
+      - admin-api
 
 volumes:
   mysql_data:
     driver: local
+
+networks:
   app_network:
     driver: bridge
