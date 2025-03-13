@@ -1,15 +1,17 @@
-FROM node:lts AS build-stage
+FROM node:lts-alpine as build-stage
 WORKDIR /app
 
-COPY ducdv-nro-admin-console /app
+COPY ducdv-nro-admin-console/package*.json ./
 RUN npm install
-RUN npm run build
+COPY ducdv-nro-admin-console/. .
 
-FROM nginx:alpine
+FROM nginx:stable-alpine as production-stage
 WORKDIR /etc/nginx
 COPY ducdv-docker/admin-console/nginx.conf /etc/nginx/nginx.conf.template
 
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app /app
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 
-CMD envsubst '$NGINX_PORT $API_HOST $API_PORT' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && \
-    nginx -g "daemon off;"
+EXPOSE ${NGINX_PORT}
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
