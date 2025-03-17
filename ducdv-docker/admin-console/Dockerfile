@@ -10,7 +10,7 @@ WORKDIR /etc/nginx
 COPY ducdv-docker/admin-console/nginx.conf /etc/nginx/nginx.conf.template
 
 COPY --from=build-stage /app /app
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY ducdv-docker/admin-console/docker-entrypoint.sh /docker-entrypoint.sh
 
 EXPOSE ${NGINX_PORT}
 

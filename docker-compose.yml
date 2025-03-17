@@ -4,7 +4,8 @@ services:
       context: .
       dockerfile: ./ducdv-docker/mysql/Dockerfile
     container_name: ducdv-nro-mysql-db
-    restart: on-failure:5
+    #restart: on-failure:5
+    restart: no
     environment:
       MYSQL_DATABASE: ${DB_DATABASE:-nro}
       MYSQL_USER: ${DB_USER:-user}
@@ -21,7 +22,8 @@ services:
       context: .
       dockerfile: ./ducdv-docker/java-server/Dockerfile
     container_name: ducdv-nro-game-server
-    restart: on-failure:5
+    #restart: on-failure:5
+    restart: no
     depends_on:
       - database
     ports:
@@ -41,7 +43,8 @@ services:
       context: .
       dockerfile: ./ducdv-docker/admin-api/Dockerfile
     container_name: ducdv-nro-admin-api
-    restart: on-failure:5
+    #restart: on-failure:5
+    restart: no
     depends_on:
       - database
     ports:
@@ -57,7 +60,8 @@ services:
       context: .
       dockerfile: ./ducdv-docker/admin-console/Dockerfile
     container_name: ducdv-nro-admin-console
-    restart: on-failure:5
+    #restart: on-failure:5
+    restart: no
     ports:
       - "8089:80"
     environment:
