@@ -12,6 +12,7 @@ COPY ducdv-docker/admin-console/nginx.conf /etc/nginx/nginx.conf.template
 COPY --from=build-stage /app /app
 COPY ducdv-docker/admin-console/docker-entrypoint.sh /docker-entrypoint.sh
 
-EXPOSE ${NGINX_PORT}
+RUN chmod +x /docker-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+EXPOSE ${NGINX_PORT}
+ENTRYPOINT ["docker-entrypoint.sh"]

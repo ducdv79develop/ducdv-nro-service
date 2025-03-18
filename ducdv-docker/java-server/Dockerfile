@@ -6,11 +6,11 @@ WORKDIR /app
 COPY ducdv-nro-java-server /app
 
 # Cấp quyền thực thi cho script start
-COPY ducdv-docker/java-server/docker-entrypoint.sh /app/docker-entrypoint.sh
-RUN chmod +x /app/docker-entrypoint.sh
+COPY ducdv-docker/java-server/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 # Expose cổng để ứng dụng chạy
 EXPOSE ${SERVER_PORT}
 
 # Chạy ứng dụng Spring Boot
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "-c", "/docker-entrypoint.sh"]

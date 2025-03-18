@@ -71,7 +71,6 @@ services:
     volumes:
       - ./ducdv-nro-admin-console:/app
       - ./ducdv-docker/admin-console/nginx.conf:/etc/nginx/nginx.conf.template
-      - ./docker-entrypoint.sh:/docker-entrypoint.sh
       - logs_data:/app/logs/nginx
     depends_on:
       - admin-api
