@@ -74,7 +74,6 @@ services:
       - logs_data:/app/logs/nginx
     depends_on:
       - admin-api
-    entrypoint: ["/bin/sh", "/docker-entrypoint.sh"]
 
 volumes:
   mysql_data:

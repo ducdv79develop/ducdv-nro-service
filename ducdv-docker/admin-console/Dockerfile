@@ -15,4 +15,4 @@ COPY ducdv-docker/admin-console/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE ${NGINX_PORT}
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "-c", "docker-entrypoint.sh"]
