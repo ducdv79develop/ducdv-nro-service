@@ -76,4 +76,4 @@ volumes:
     ```
 
 ### Handling Log Rotation
-To prevent log files from growing indefinitely, consider setting up log rotation using \`logrotate\` or configuring Docker's logging driver.  
+To prevent log files from growing indefinitely, consider setting up log rotation using `logrotate` or configuring Docker's logging driver.  
