@@ -35,8 +35,8 @@ ducdv-nro-service/
 
 ### **1️⃣ Clone Repository**  
 ```sh
-  git clone https://github.com/ducdv79develop/ducdv-nro-service.git
-  cd ducdv-nro-service
+git clone https://github.com/ducdv79develop/ducdv-nro-service.git
+cd ducdv-nro-service
 ```
 
 ### **2️⃣ Setup Environment Variables**  
@@ -58,7 +58,7 @@ NGINX_PORT=8000
 
 ### **3️⃣ Build & Run with Docker Compose**  
 ```sh
-  docker-compose up --build -d
+docker-compose up --build -d
 ```
 This command will:  
 ✅ Start MySQL Database  
@@ -73,10 +73,10 @@ All logs will be stored in the `logs_data` volume and mounted outside to `/home/
 
 ### **📜 View logs per container**  
 ```sh
-    docker logs -f ducdv-nro-mysql-db
-    docker logs -f ducdv-nro-game-server
-    docker logs -f ducdv-nro-admin-api
-    docker logs -f ducdv-nro-admin-console
+docker logs -f ducdv-nro-mysql-db
+docker logs -f ducdv-nro-game-server
+docker logs -f ducdv-nro-admin-api
+docker logs -f ducdv-nro-admin-console
 ```
 
 ### **📜 Log storage configuration on the host**  
@@ -113,15 +113,15 @@ This means logs will be saved to `/home/user/docker-logs`. To change the log sto
 ## **🛠️ Useful Commands**  
 **Stop all containers:**  
 ```sh
-  docker-compose down
+docker-compose down
 ```
 **Restart a specific container:**  
 ```sh
-  docker-compose restart <service-name>
+docker-compose restart <service-name>
 ```
 **Remove all containers and volumes:**  
 ```sh
-  docker-compose down -v
+docker-compose down -v
 ```
 
 ---
