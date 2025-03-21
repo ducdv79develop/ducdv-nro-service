@@ -13,4 +13,4 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE ${API_SERVER_PORT}
 
 # Chạy ứng dụng Spring Boot
-#ENTRYPOINT ["/bin/sh", "-c", "/docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "-c", "/docker-entrypoint.sh"]

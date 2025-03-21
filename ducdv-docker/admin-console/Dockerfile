@@ -1,18 +1,12 @@
-FROM node:lts-alpine as build-stage
-WORKDIR /app
+FROM nginx:stable-alpine
 
-COPY ducdv-nro-admin-console/package*.json ./
-RUN npm install
-COPY ducdv-nro-admin-console/. .
-
-FROM nginx:stable-alpine as production-stage
 WORKDIR /etc/nginx
-COPY ducdv-docker/admin-console/nginx.conf /etc/nginx/nginx.conf.template
 
-COPY --from=build-stage /app /app
+COPY ducdv-docker/admin-console/nginx.conf /etc/nginx/nginx.conf.template
 COPY ducdv-docker/admin-console/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE ${NGINX_PORT}
-ENTRYPOINT ["/bin/sh", "-c", "docker-entrypoint.sh"]
+
+ENTRYPOINT ["/bin/sh", "-c", "/docker-entrypoint.sh"]
