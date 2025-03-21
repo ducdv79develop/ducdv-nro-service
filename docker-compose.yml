@@ -15,7 +15,7 @@ services:
       - "${DB_PORT:-3306}:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - logs_data:/logs/mysql
+      - logs_data:/logs
 
   server:
     build:
@@ -36,7 +36,7 @@ services:
       - app_network
     volumes:
       - ./ducdv-nro-java-server:/app
-      - logs_data:/app/logs/java-server
+      - logs_data:/app/logs
 
   admin-api:
     build:
@@ -53,7 +53,7 @@ services:
       - .env
     volumes:
       - ./ducdv-nro-admin-api:/app
-      - logs_data:/app/logs/admin-api
+      - logs_data:/app/logs
 
   admin-console-builder:
     build:
@@ -83,7 +83,7 @@ services:
     volumes:
       - ./ducdv-nro-admin-console/dist:/usr/share/nginx/html
       - ./ducdv-docker/admin-console/nginx.conf:/etc/nginx/nginx.conf.template
-      - logs_data:/etc/nginx/logs
+      - logs_data:/var/log/nginx
     depends_on:
       - admin-console-builder
 
@@ -92,6 +92,10 @@ volumes:
     driver: local
   logs_data:
     driver: local
+    driver_opts:
+      type: none
+      device: ${OUTPUT_LOGS_LOCAL:-/home/user/docker-logs}
+      o: bind
 
 networks:
   app_network:

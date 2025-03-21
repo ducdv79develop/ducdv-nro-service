@@ -1,3 +1,5 @@
 .idea
 .env
 /logs
+/docker-logs/*.log
+/docker-logs/*/*.log
